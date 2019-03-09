@@ -10,7 +10,8 @@ class EconomicDataSpiderSpider(CrawlSpider):
     start_urls = ['http://www.jiangmen.gov.cn/szdwzt/jmtjj//']
 
     rules = (
-        Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=True),
+        Rule(LinkExtractor(allow=r'Items/'), follow=True),
+        Rule(LinkExtractor(allow=r'Items/'), callback='parse_item', follow=False)
     )
 
     def parse_item(self, response):
