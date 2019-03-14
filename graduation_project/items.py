@@ -9,6 +9,7 @@ import scrapy
 
 
 class GraduationProjectItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+    title = scrapy.Field()
+    pub_time = scrapy.Field()
+    pub_resource = scrapy.Field()
+    all_content = scrapy.Field()
