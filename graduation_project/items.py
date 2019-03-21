@@ -9,7 +9,12 @@ import scrapy
 
 
 class GraduationProjectItem(scrapy.Item):
+    pass
+
+
+class OriginDataDetailItem(scrapy.Item):
     title = scrapy.Field()
     pub_time = scrapy.Field()
-    pub_resource = scrapy.Field()
+    pub_source = scrapy.Field()
     all_content = scrapy.Field()
+    current_url = scrapy.Field()
