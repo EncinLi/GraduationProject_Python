@@ -8,6 +8,8 @@
 #     https://doc.scrapy.org/en/latest/topics/settings.html
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
+import datetime
+import os
 
 BOT_NAME = 'graduation_project'
 
@@ -66,10 +68,10 @@ DEFAULT_REQUEST_HEADERS = {
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'graduation_project.pipelines.GraduationProjectPipeline': 300,
-#    'graduation_project.pipelines.SaveDataInMySqlPipeline': 300,
-# }
+ITEM_PIPELINES = {
+   # 'graduation_project.pipelines.GraduationProjectPipeline': 300,
+   'graduation_project.pipelines.SaveOriginMessagePipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
@@ -91,3 +93,13 @@ DEFAULT_REQUEST_HEADERS = {
 #HTTPCACHE_DIR = 'httpcache'
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+
+# today = datetime.datetime.now()
+#
+# file_path = r'logs'
+# if not os.path.exists(file_path):
+#     os.makedirs(file_path)
+# log_file_path = "logs/economic_spider_{}_{}_{}.log".format(today.year, today.month, today.day)
+#
+# LOG_LEVEL = "DEBUG"
+# LOG_FILE = log_file_path

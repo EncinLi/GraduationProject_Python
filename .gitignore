@@ -9,3 +9,6 @@ out
 gen
 
 /.idea/
+*/__pycache__/
+*.cpython-37.pyc
+/logs/

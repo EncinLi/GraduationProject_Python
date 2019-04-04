@@ -12,7 +12,8 @@ class GraduationProjectItem(scrapy.Item):
     pass
 
 
-class OriginDataDetailItem(scrapy.Item):
+class OriginMessageDetailItem(scrapy.Item):
+    db_symbol = scrapy.Field()
     title = scrapy.Field()
     pub_time = scrapy.Field()
     pub_source = scrapy.Field()
