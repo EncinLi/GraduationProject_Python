@@ -10,10 +10,6 @@ from pymysql import cursors
 
 
 class GraduationProjectPipeline(object):
-    pass
-
-
-class SaveOriginMessagePipeline(object):
     def __init__(self):
         # db_params = {
         #     'host': '47.107.109.117',

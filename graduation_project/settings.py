@@ -69,8 +69,7 @@ DEFAULT_REQUEST_HEADERS = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   # 'graduation_project.pipelines.GraduationProjectPipeline': 300,
-   'graduation_project.pipelines.SaveOriginMessagePipeline': 300,
+   'graduation_project.pipelines.GraduationProjectPipeline': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
