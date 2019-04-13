@@ -43,7 +43,7 @@ class EconomicDataSpiderSpider(scrapy.Spider):
             elif TARGET_GYZJZ in response.url:
                 next_page_url = BASE_DOMAIN + TARGET_GYZJZ + COMPONENT_DEFAULT + str(i) + COMPONENT_HTML
 
-            next_page_url = BASE_DOMAIN + TARGET_GYZJZ + COMPONENT_DEFAULT + str(i) + COMPONENT_HTML
+            # next_page_url = BASE_DOMAIN + TARGET_GYZJZ + COMPONENT_DEFAULT + str(i) + COMPONENT_HTML
             yield scrapy.Request(next_page_url, callback=self.parse)
 
     @staticmethod
@@ -85,7 +85,7 @@ class EconomicDataSpiderSpider(scrapy.Spider):
                 continue
             else:
                 if indicator_amount == '---':
-                    indicator_amount = re.sub(r'---', '', indicator_amount)
+                    indicator_amount = re.sub(r'---', '0', indicator_amount)
 
                 # print("=" * 20)
                 # print('||' + month_range + '^^^^^^^^' + month + '||')
@@ -93,11 +93,11 @@ class EconomicDataSpiderSpider(scrapy.Spider):
                 #       '||' + indicator_percentage_increase + '||')
                 # print("=" * 20)
 
-                # main_economic_indicator = GraduationProjectItem(db_symbol='main_economic_indicator', title=title, month=month,
-                #                                                     indicator_name=indicator_name,
-                #                                                     indicator_unit=indicator_unit,
-                #                                                     indicator_amount=indicator_amount,
-                #                                                     indicator_percentage_increase=indicator_percentage_increase,
-                #                                                     current_url=current_url)
-                # yield main_economic_indicator
+                main_economic_indicator = GraduationProjectItem(db_symbol='main_economic_indicator', title=title,
+                                                                year=year, month_range=month_range, month=month,
+                                                                indicator_name=indicator_name,
+                                                                indicator_unit=indicator_unit,
+                                                                indicator_amount=indicator_amount,
+                                                                indicator_percentage_increase=indicator_percentage_increase)
+                yield main_economic_indicator
 

@@ -38,13 +38,20 @@ class GraduationProjectPipeline(object):
         defer.addErrback(self.handle_error, item, spider)
 
     def insert_item(self, cursor, item):
-        cursor.execute(self.origin_message_select_sql, (item.get('current_url')))
-        repetition = cursor.fetchone()
-        if not repetition:
-            if item['db_symbol'] == 'origin_message':
+        if item.get('db_symbol') == 'origin_message':
+            cursor.execute(self.origin_message_select_sql, (item.get('title')))
+            repetition = cursor.fetchone()
+            if not repetition:
                 cursor.execute(self.origin_message_insert_sql, (
-                    item.get('title'), item.get('pub_time'), item.get('pub_source'), item.get('all_content'),
-                    item.get('current_url')))
+                    item.get('title'), item.get('pub_time'), item.get('pub_source'), item.get('all_content')))
+        elif item.get('db_symbol') == 'main_economic_indicator':
+            cursor.execute(self.main_economic_indicator_select_sql, (item.get('title'), item.get('indicator_name')))
+            repetition = cursor.fetchone()
+            if not repetition:
+                cursor.execute(self.main_economic_indicator_insert_sql,
+                               (item.get('title'), item.get('year'), item.get('month'), item.get('month_range'),
+                                item.get('indicator_name'), item.get('indicator_unit'), item.get('indicator_amount'),
+                                item.get('indicator_percentage_increase')))
 
     def handle_error(self, error, item, spider):
         logging.log(logging.INFO, error)
@@ -56,7 +63,7 @@ class GraduationProjectPipeline(object):
     def origin_message_insert_sql(self):
         if not self._insert_sql:
             self._insert_sql = """
-            insert into gp_origin_message(id, title, pub_time, pub_source, all_content, current_url) values(null, %s, %s, %s, %s, %s)
+            insert into gp_origin_message(id, title, pub_time, pub_source, all_content) values(null, %s, %s, %s, %s)
             """
             return self._insert_sql
         return self._insert_sql
@@ -65,8 +72,26 @@ class GraduationProjectPipeline(object):
     def origin_message_select_sql(self):
         if not self._select_sql:
             self._select_sql = """
-            select * from origin_message where current_url = %s
+            select * from gp_origin_message where title = %s
             """
             return self._select_sql
         return self._select_sql
 
+    @property
+    def main_economic_indicator_insert_sql(self):
+        if not self._insert_sql:
+            self._insert_sql = """
+                insert into gp_main_economic_indicator(id, title, `year`, `month`, month_range, indicator_name, indicator_unit,
+                indicator_amount, indicator_percentage_increase) values(null, %s, %s, %s, %s, %s, %s, %s, %s)
+                """
+            return self._insert_sql
+        return self._insert_sql
+
+    @property
+    def main_economic_indicator_select_sql(self):
+        if not self._select_sql:
+            self._select_sql = """
+                select * from gp_main_economic_indicator where title = %s and indicator_name = %s
+                """
+            return self._select_sql
+        return self._select_sql
